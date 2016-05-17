@@ -3,6 +3,7 @@ module ComponentList exposing (
     Msg, update,
     ViewParams, view
   )
+
 {-| This library implements a generic list component, that, given a component type, creates a list of it
 It can be used everywhere in your interface where there are list of elements with
 which the user can interact.
