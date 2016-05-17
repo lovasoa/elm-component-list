@@ -58,12 +58,10 @@ type alias Model componentModel =
     cModel = "Hello"
     cUpdate v _ = v
     cView cmodel = input [onInput identity, value cmodel] []
-    -- Create a list of text inputs
     main =
       App.beginnerProgram {
-        model =
-          init "New hello" "Delete this hello" cModel,
-        view = view cView,
+        model = init cModel,
+        view = view (ViewParams "New hello" "Delete this hello") cView,
         update = update cUpdate
       }
 -}
