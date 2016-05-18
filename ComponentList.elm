@@ -151,8 +151,9 @@ update updateModel msg model =
 
 -- VIEW
 {-| Represents the text to display in the GUI view
-    * *newModelTxt* : text to display in the "+" button
-    * *deleteModelTxt* : text to display in the "-" button
+
+  * *newModelTxt* : text to display in the "+" button
+  * *deleteModelTxt* : text to display in the "-" button
 -}
 type alias ViewParams = {
     newModelTxt : String,
