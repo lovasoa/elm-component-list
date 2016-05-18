@@ -1,12 +1,14 @@
 {
-    "version": "1.0.2",
+    "version": "1.0.4",
     "summary": "A generic list component for the Elm Architecture.",
     "repository": "https://github.com/lovasoa/elm-component-list.git",
     "license": "BSD3",
     "source-directories": [
         "."
     ],
-    "exposed-modules": ["ComponentList"],
+    "exposed-modules": [
+        "ComponentList"
+    ],
     "dependencies": {
         "elm-lang/core": "4.0.0 <= v < 5.0.0",
         "elm-lang/html": "1.0.0 <= v < 2.0.0"

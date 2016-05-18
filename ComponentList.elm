@@ -25,13 +25,22 @@ The generated html will have this form:
 
 
 # Model
-@docs init, getModels, setModels, Model
 
-# View
-@docs ViewParams, view
+## Model creation
+How to create a `ComponentList.Model` from your own component model.
+
+@docs init, setModels, Model
+
+## Get the information back from the `ComponentList`
+@docs getModels
 
 # Update
 @docs Msg, update
+
+# View
+Create a list view from your own component's view
+@docs ViewParams, view
+
 -}
 
 import Html.App as App
@@ -51,10 +60,12 @@ type alias Model componentModel =
   }
 
 
-{-| Create a new model representing a list of elements of the given model
+{-| Create a new model representing a list of elements of the given model.
+When a new element will be added to the list, its initial model will be the model
+given as the first parameter of this function.
 
     -- EXAMPLE
-    -- simple component that prints a hello button
+    -- simple component, representing a string, and printing it to a text field
     cModel = "Hello"
     cUpdate v _ = v
     cView cmodel = input [onInput identity, value cmodel] []
@@ -84,8 +95,12 @@ setModels cmodels model =
     nextID = List.length cmodels
   }
 
+
 -- UPDATE
-{-| Represents a model update message-}
+
+{-| Represents a model update message.
+`componentMsg` is the type of the component messages.
+-}
 type Msg componentMsg
   = Insert
   | InsertAfter ID
@@ -93,7 +108,8 @@ type Msg componentMsg
   | Modify ID componentMsg
 
 {-| Given the component update function, returns a `ComponentList` update function
-    update Counter.update
+
+    updateComponentList = ComponentList.update updateComponent
 -}
 update : (compMsg -> compModel -> compModel) -> Msg compMsg -> Model compModel -> Model compModel
 update updateModel msg model =
@@ -143,7 +159,11 @@ type alias ViewParams = {
     deleteModelTxt : String
 }
 
-{-| Given a component view function, return a ComponentList view function-}
+{-| Given a component view function, return a ComponentList view function
+
+    params = ViewParams "New component" "Delete this component"
+    listView = ComponentList.view params componentView
+-}
 view : ViewParams -> (compModel -> Html compMsg) -> Model compModel -> Html (Msg compMsg)
 view params viewComponent model =
   div [class "ComponentList"]
@@ -182,13 +202,16 @@ viewComponentActions params viewComponent (id, compModel) =
 
 
 -- EXAMPLE
--- simple component that prints a hello button
-cModel = "Hello"
-cUpdate v _ = v
-cView cmodel = input [onInput identity, value cmodel] []
+-- simple component that displays a text field
+cModel = "Hello" -- The initial content of the text field
+cUpdate newText oldText = newText
+cView cmodel = -- A very simple view, just a text field containing the model
+  input [onInput identity, value cmodel] []
+
 main =
   App.beginnerProgram {
     model = init cModel,
-    view = view (ViewParams "New hello" "Delete this hello") cView,
+    view = -- Indicate the text that will be displayed on the buttons
+      view (ViewParams "New hello" "Delete this hello") cView,
     update = update cUpdate
   }
