@@ -80,8 +80,10 @@ given as the first parameter of this function.
     cModel = "Hello"
     cUpdate v _ = v
     cView cmodel = input [onInput identity, value cmodel] []
+
+    -- Using ComponentList to create a list of the component defined above
     main =
-      App.beginnerProgram {
+      Html.beginnerProgram {
         model = init cModel,
         view = view (ViewParams "New hello" "Delete this hello") cView,
         update = update cUpdate
