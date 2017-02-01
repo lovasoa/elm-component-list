@@ -1,5 +1,5 @@
 {
-    "version": "1.0.6",
+    "version": "1.0.7",
     "summary": "A generic list component for the Elm Architecture.",
     "repository": "https://github.com/lovasoa/elm-component-list.git",
     "license": "BSD3",
