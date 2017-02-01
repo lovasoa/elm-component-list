@@ -49,7 +49,7 @@ Create a list view from your own component's view
 
 -}
 
-import Html.App
+import Html
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
@@ -99,7 +99,7 @@ init model =
 -}
 getModels : Model a -> List a
 getModels model =
-    List.map snd model.models
+    List.map Tuple.second model.models
 
 
 {-| Set the the models of the elements of a `ComponentList`
@@ -107,7 +107,10 @@ getModels model =
 setModels : List a -> Model a -> Model a
 setModels cmodels model =
     { model
-        | models = List.map2 (,) [0..List.length cmodels] cmodels
+        | models =
+            List.map2 (,)
+                (List.range 0 (List.length cmodels))
+                cmodels
         , nextID = List.length cmodels
     }
 
@@ -205,7 +208,7 @@ view params viewComponent model =
 
 viewComponentWith : (compModel -> Html compMsg) -> ( ID, compModel ) -> Html (Msg compMsg)
 viewComponentWith viewComponent ( id, model ) =
-    App.map (Modify id) (viewComponent model)
+    Html.map (Modify id) (viewComponent model)
 
 
 {-| View a component and its associated "new component" and "delete component"
@@ -253,7 +256,7 @@ cView cmodel =
 
 
 main =
-    App.beginnerProgram
+    Html.beginnerProgram
         { model = init cModel
         , view =
             -- Indicate the text that will be displayed on the buttons
